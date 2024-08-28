@@ -34,4 +34,20 @@ export default class SongController {
         return { body: {} };
 
     }
+
+    static async total(type: "songs" | "artists" | "albums" | "genres"): Promise<IResponseType<number>> {
+        return { body: await SongsModel.total(type) }
+    }
+
+    static async totalSongsPerGenre(): Promise<IResponseType<{ _id: string, count: number }>> {
+        return { body: await SongsModel.totalSongsPerGenre() }
+    }
+
+    static async artistStats(): Promise<IResponseType<{ _id: string, count: number }>> {
+        return { body: await SongsModel.artistStats() }
+    }
+
+    static async songsPerAlbum(): Promise<IResponseType<{ _id: string, count: number }>> {
+        return { body: await SongsModel.songsPerAlbum() }
+    }
 }

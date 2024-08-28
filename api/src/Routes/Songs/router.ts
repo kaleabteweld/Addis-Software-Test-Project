@@ -32,6 +32,31 @@ publicSongRouter.delete("/delete/:id", MakeErrorHandler(
     }
 ));
 
+publicSongRouter.get("/total/:type", MakeErrorHandler(
+    async (req: any, res: Response) => {
+        const type = req.params.type;
+        res.json(await SongController.total(type));
+    }
+));
+
+publicSongRouter.get("/total/genre", MakeErrorHandler(
+    async (req: any, res: Response) => {
+        res.json(await SongController.totalSongsPerGenre());
+    }
+));
+
+publicSongRouter.get("/total/artistStats", MakeErrorHandler(
+    async (req: any, res: Response) => {
+        res.json(await SongController.artistStats());
+    }
+));
+
+publicSongRouter.get("/total/album", MakeErrorHandler(
+    async (req: any, res: Response) => {
+        res.json(await SongController.songsPerAlbum());
+    }
+));
+
 
 
 publicSongRouter.use("/song", publicSongRouter);
