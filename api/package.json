@@ -4,7 +4,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "set NODE_ENV=development && nodemon src/server.ts",
-    "build": "npm i && tsc",
+    "build": "tsc",
     "start": "node dist/server.js"
   },
   "keywords": [],
