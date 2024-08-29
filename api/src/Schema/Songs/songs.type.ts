@@ -21,9 +21,9 @@ export interface ISongsModel extends mongoose.Model<ISongsDocument> {
     removeByID(_id: string): Promise<void>
 
     total(type: "songs" | "artists" | "albums" | "genres" | "all"): Promise<number | { songs: number, artists: number, albums: number, genres: number }>
-    totalSongsPerGenre(): Promise<{ _id: string, count: number }>
-    artistStats(): Promise<{ _id: string, count: number }>
-    songsPerAlbum(): Promise<{ _id: string, count: number }>
+    totalSongsPerGenre(): Promise<{ _id: string, count: number }[]>
+    artistStats(): Promise<{ _id: string, count: number }[]>
+    songsPerAlbum(): Promise<{ _id: string, count: number }[]>
 }
 
 export interface INewSongFrom {

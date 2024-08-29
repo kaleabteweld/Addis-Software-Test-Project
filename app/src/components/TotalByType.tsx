@@ -27,6 +27,7 @@ export default function TotalByType() {
                         <CircularProgress />
                     </Box> :
                         totalBy === "all" ? <PieChart
+                            sx={{ marginTop: 4 }}
                             series={[
                                 {
                                     data: Object.entries(_totalBy as { songs: number, artists: number, albums: number, genres: number }).map(([label, value], id) => ({ id, label, value })),

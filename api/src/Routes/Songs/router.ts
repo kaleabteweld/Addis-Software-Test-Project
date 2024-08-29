@@ -47,19 +47,19 @@ publicSongRouter.get("/total/:type", MakeErrorHandler(
     }
 ));
 
-publicSongRouter.get("/total/genre", MakeErrorHandler(
+publicSongRouter.get("/total/per/genre", MakeErrorHandler(
     async (req: any, res: Response) => {
         res.json(await SongController.totalSongsPerGenre());
     }
 ));
 
-publicSongRouter.get("/total/artistStats", MakeErrorHandler(
+publicSongRouter.get("/total/per/artistStats", MakeErrorHandler(
     async (req: any, res: Response) => {
         res.json(await SongController.artistStats());
     }
 ));
 
-publicSongRouter.get("/total/album", MakeErrorHandler(
+publicSongRouter.get("/total/per/album", MakeErrorHandler(
     async (req: any, res: Response) => {
         res.json(await SongController.songsPerAlbum());
     }

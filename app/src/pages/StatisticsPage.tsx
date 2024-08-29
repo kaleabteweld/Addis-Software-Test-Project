@@ -1,16 +1,12 @@
-import { AppBar, Box, Button, CircularProgress, Container, Toolbar, Typography } from "@mui/material";
+import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/material";
 import { Link as RouterLink } from 'react-router-dom';
-import { useGetTotalByTypeQuery } from "../api/slices/song.slices";
-import { useState } from "react";
-import { PieChart } from '@mui/x-charts/PieChart';
 import TotalByType from "../components/TotalByType";
+import TotalSongsPerGenre from "../components/TotalSongsPerGenre";
 
 
 
 export default function StatisticsPage() {
 
-    const [totalBy, setTotalBy] = useState<"songs" | "artists" | "albums" | "genres" | "all">("all");
-    const { data: _totalBy, isFetching: _totalByLoading, refetch } = useGetTotalByTypeQuery(totalBy);
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -26,6 +22,7 @@ export default function StatisticsPage() {
 
             <Container>
                 <TotalByType />
+                <TotalSongsPerGenre />
 
             </Container>
         </Box>

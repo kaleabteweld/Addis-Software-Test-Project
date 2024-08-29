@@ -97,7 +97,7 @@ export async function total(this: mongoose.Model<ISongs>, type: "songs" | "artis
     }
 }
 
-export async function totalSongsPerGenre(this: mongoose.Model<ISongs>): Promise<{ _id: string, count: number }> {
+export async function totalSongsPerGenre(this: mongoose.Model<ISongs>): Promise<{ _id: string, count: number }[]> {
     try {
         const totalSongsPerGenre = await this.aggregate<ISongs>([
             {
@@ -107,14 +107,13 @@ export async function totalSongsPerGenre(this: mongoose.Model<ISongs>): Promise<
                 }
             }
         ])
-        console.log({ totalSongsPerGenre })
         return totalSongsPerGenre as any
     } catch (error) {
         throw error;
     }
 }
 
-export async function artistStats(this: mongoose.Model<ISongs>): Promise<{ _id: string, count: number }> {
+export async function artistStats(this: mongoose.Model<ISongs>): Promise<{ _id: string, count: number }[]> {
     try {
         const artistStats = await this.aggregate<ISongs>([
             {
@@ -140,7 +139,7 @@ export async function artistStats(this: mongoose.Model<ISongs>): Promise<{ _id: 
     }
 }
 
-export async function songsPerAlbum(this: mongoose.Model<ISongs>): Promise<{ _id: string, count: number }> {
+export async function songsPerAlbum(this: mongoose.Model<ISongs>): Promise<{ _id: string, count: number }[]> {
     try {
         const songsPerAlbum = await this.aggregate<ISongs>([
             {
