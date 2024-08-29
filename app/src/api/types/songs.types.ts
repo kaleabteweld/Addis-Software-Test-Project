@@ -18,3 +18,11 @@ export interface INewSongFrom {
 
 export interface ISongUpdateFrom extends Partial<INewSongFrom> {
 }
+
+
+interface TotalStats {
+    songs: number;
+    artists: number;
+    albums: number;
+    genres: number;
+}

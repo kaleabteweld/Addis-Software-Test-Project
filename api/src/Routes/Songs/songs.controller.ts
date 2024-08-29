@@ -39,7 +39,7 @@ export default class SongController {
 
     }
 
-    static async total(type: "songs" | "artists" | "albums" | "genres"): Promise<IResponseType<number>> {
+    static async total(type: "songs" | "artists" | "albums" | "genres" | "all"): Promise<IResponseType<number | { songs: number, artists: number, albums: number, genres: number }>> {
         return { body: await SongsModel.total(type) }
     }
 

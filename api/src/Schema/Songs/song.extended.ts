@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import Joi from "joi";
+import Joi, { string } from "joi";
 import { ValidationErrorFactory } from "../../Types/error"
 import { BSONError } from 'bson';
 import { MakeValidator } from "../../Util";
@@ -71,7 +71,7 @@ export async function update(this: mongoose.Model<ISongs>, _id: string, sewSongs
     }
 }
 
-export async function total(this: mongoose.Model<ISongs>, type: "songs" | "artists" | "albums" | "genres"): Promise<number> {
+export async function total(this: mongoose.Model<ISongs>, type: "songs" | "artists" | "albums" | "genres" | "all"): Promise<number | { songs: number, artists: number, albums: number, genres: number }> {
     try {
         switch (type) {
             case "songs":
@@ -82,6 +82,13 @@ export async function total(this: mongoose.Model<ISongs>, type: "songs" | "artis
                 return await this.distinct("album").countDocuments();
             case "genres":
                 return await this.distinct("genre").countDocuments();
+            case "all":
+                return {
+                    songs: await this.countDocuments(),
+                    artists: await this.distinct("artist").countDocuments(),
+                    albums: await this.distinct("album").countDocuments(),
+                    genres: await this.distinct("genre").countDocuments(),
+                }
             default:
                 throw new Error("Invalid type");
         }

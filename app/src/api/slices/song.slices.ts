@@ -43,8 +43,9 @@ const reviewApiSlice = songAPI.injectEndpoints({
             invalidatesTags: (result, _, id) => result ? [{ type: 'Song', id }] : [],
         }),
 
-        getTotalByType: builder.query<ISongs, "songs" | "artists" | "albums" | "genres">({
+        getTotalByType: builder.query<number | { songs: number, artists: number, albums: number, genres: number }, "songs" | "artists" | "albums" | "genres" | "all">({
             query: (type) => `/total/${type}`,
+            transformResponse: (response: { body: number | { songs: number, artists: number, albums: number, genres: number } }) => response.body,
         }),
 
         getTotalSongsPerGenre: builder.query({

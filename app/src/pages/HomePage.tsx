@@ -19,9 +19,6 @@ const HomePage = () => {
     const [selectedSong, setSelectedSong] = useState<ISongs | null>(null);
 
 
-    const handleDelete = async (id: string) => {
-    };
-
     return (
         <Box sx={{ flexGrow: 1 }}>
             <AppBar position="static">
@@ -29,9 +26,6 @@ const HomePage = () => {
                     <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                         Music App
                     </Typography>
-                    <Button color="inherit" component={RouterLink} to="/">
-                        Home
-                    </Button>
                     <Button color="inherit" component={RouterLink} to="/statistics">
                         Statistics
                     </Button>

@@ -20,7 +20,7 @@ export interface ISongsModel extends mongoose.Model<ISongsDocument> {
     update(_id: string, newSong: ISongUpdateFrom, populatePath?: string | string[]): Promise<ISongsDocument | null>
     removeByID(_id: string): Promise<void>
 
-    total(type: "songs" | "artists" | "albums" | "genres"): Promise<number>
+    total(type: "songs" | "artists" | "albums" | "genres" | "all"): Promise<number | { songs: number, artists: number, albums: number, genres: number }>
     totalSongsPerGenre(): Promise<{ _id: string, count: number }>
     artistStats(): Promise<{ _id: string, count: number }>
     songsPerAlbum(): Promise<{ _id: string, count: number }>
