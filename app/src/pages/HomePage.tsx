@@ -1,12 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { AppBar, Toolbar, Typography, Button, Container, Box, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { ISongs } from '../api/types/songs.types';
+import CreateSongModal from '../components/CreateSongModal';
+import { useGetSongsQuery } from '../api/slices/song.slices';
 
 const HomePage = () => {
-    const [songs, setSongs] = useState<ISongs[]>([]);
+    const [page, setPage] = useState(0);
+    const { data: songs, isLoading } = useGetSongsQuery(page);
+    const [openCreateModal, setOpenCreateModal] = useState(false);
 
     const handleDelete = async (id: string) => {
     };
@@ -24,59 +28,63 @@ const HomePage = () => {
                     <Button color="inherit" component={RouterLink} to="/statistics">
                         Statistics
                     </Button>
+                    <Button
+                        variant="contained"
+                        color="secondary"
+                        onClick={() => setOpenCreateModal(true)}
+                        sx={{ marginY: 2 }}
+                    >
+                        Add New Song
+                    </Button>
                 </Toolbar>
             </AppBar>
 
-            {/* Main Content */}
             <Container>
                 <Typography variant="h4" component="h1" sx={{ marginTop: 4 }}>
                     Songs List
                 </Typography>
 
-                <Button
-                    variant="contained"
-                    color="primary"
-                    component={RouterLink}
-                    to="/create"
-                    sx={{ marginY: 2 }}
-                >
-                    Add New Song
-                </Button>
+                {
+                    (isLoading && !songs) ? <Typography variant="h6" component="h2" sx={{ marginTop: 2 }}>
+                        Loading...
+                    </Typography> : <List>
+                        {songs?.map((song) => (
+                            <ListItem
+                                key={song._id}
+                                sx={{
+                                    border: '1px solid #ddd',
+                                    borderRadius: 1,
+                                    marginBottom: 2,
+                                }}
+                            >
+                                <ListItemText
+                                    primary={`${song.title} - ${song.artist}`}
+                                    secondary={`Album: ${song.album}, Genre: ${song.genre}`}
+                                />
+                                <IconButton
+                                    edge="end"
+                                    aria-label="edit"
+                                    component={RouterLink}
+                                    to={`/edit/${song._id}`}
+                                >
+                                    <EditIcon />
+                                </IconButton>
+                                <IconButton
+                                    edge="end"
+                                    aria-label="delete"
+                                    onClick={() => handleDelete(song._id)}
+                                >
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ListItem>
+                        ))}
+                    </List>
+                }
 
-                {/* List of Songs */}
-                <List>
-                    {songs.map((song) => (
-                        <ListItem
-                            key={song._id}
-                            sx={{
-                                border: '1px solid #ddd',
-                                borderRadius: 1,
-                                marginBottom: 2,
-                            }}
-                        >
-                            <ListItemText
-                                primary={`${song.title} - ${song.artist}`}
-                                secondary={`Album: ${song.album}, Genre: ${song.genre}`}
-                            />
-                            <IconButton
-                                edge="end"
-                                aria-label="edit"
-                                component={RouterLink}
-                                to={`/edit/${song._id}`}
-                            >
-                                <EditIcon />
-                            </IconButton>
-                            <IconButton
-                                edge="end"
-                                aria-label="delete"
-                                onClick={() => handleDelete(song._id)}
-                            >
-                                <DeleteIcon />
-                            </IconButton>
-                        </ListItem>
-                    ))}
-                </List>
+
             </Container>
+
+            <CreateSongModal open={openCreateModal} onClose={() => setOpenCreateModal(false)} />
         </Box>
     );
 };

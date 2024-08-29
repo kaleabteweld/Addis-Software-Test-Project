@@ -12,6 +12,14 @@ publicSongRouter.get("/:id", MakeErrorHandler(
     }
 ));
 
+publicSongRouter.get("/all/:page", MakeErrorHandler(
+    async (req: any, res: Response) => {
+        const page = req.params.page;
+        res.json(await SongController.getAll(page));
+    }
+));
+
+
 publicSongRouter.patch("/update/:id", MakeErrorHandler(
     async (req: any, res: Response) => {
         const songId = req.params.id;

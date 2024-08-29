@@ -27,6 +27,10 @@ export default class SongController {
         return { body: ((await SongsModel.getById(songId))?.toJSON() as any) };
     }
 
+    static async getAll(page: number): Promise<IResponseType<ISongs[]>> {
+        return { body: await SongsModel.find().skip(page * 10).limit(10).exec() }
+    }
+
     static async removeById(songId: string): Promise<IResponseType<{} | null>> {
         const song = await SongsModel.getById(songId);
         await SongsModel.removeByID(song?.id)
