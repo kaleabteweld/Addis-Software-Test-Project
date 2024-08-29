@@ -47,7 +47,7 @@ export default class SongController {
         return { body: await SongsModel.totalSongsPerGenre() }
     }
 
-    static async artistStats(): Promise<IResponseType<{ _id: string, count: number }[]>> {
+    static async artistStats(): Promise<IResponseType<{ _id: string, totalAlbums: number, totalSongs: number }[]>> {
         return { body: await SongsModel.artistStats() }
     }
 

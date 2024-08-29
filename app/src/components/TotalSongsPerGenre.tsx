@@ -7,7 +7,6 @@ import { PieChart } from '@mui/x-charts/PieChart';
 export default function TotalSongsPerGenre() {
 
     const { data: totalSongsPerGenre, isFetching: totalSongsPerGenreLoading, } = useGetTotalSongsPerGenreQuery();
-    console.log(totalSongsPerGenre);
     return (
         <Box sx={{ flexGrow: 1 }}>
 
@@ -26,8 +25,8 @@ export default function TotalSongsPerGenre() {
                                     data: (totalSongsPerGenre as { _id: string, count: number }[]).map(({ _id, count }, id) => ({ id, label: _id, value: count })),
                                 },
                             ]}
-                            width={400}
-                            height={200}
+                            width={800}
+                            height={300}
                         />
                 }
 

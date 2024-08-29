@@ -2,6 +2,7 @@ import { AppBar, Box, Button, Container, Toolbar, Typography } from "@mui/materi
 import { Link as RouterLink } from 'react-router-dom';
 import TotalByType from "../components/TotalByType";
 import TotalSongsPerGenre from "../components/TotalSongsPerGenre";
+import TotalSongsPerArtist from "../components/TotalSongsPerArtistStats";
 
 
 
@@ -23,6 +24,7 @@ export default function StatisticsPage() {
             <Container>
                 <TotalByType />
                 <TotalSongsPerGenre />
+                <TotalSongsPerArtist />
 
             </Container>
         </Box>

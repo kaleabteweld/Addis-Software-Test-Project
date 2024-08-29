@@ -113,7 +113,7 @@ export async function totalSongsPerGenre(this: mongoose.Model<ISongs>): Promise<
     }
 }
 
-export async function artistStats(this: mongoose.Model<ISongs>): Promise<{ _id: string, count: number }[]> {
+export async function artistStats(this: mongoose.Model<ISongs>): Promise<{ _id: string, totalAlbums: number, totalSongs: number }[]> {
     try {
         const artistStats = await this.aggregate<ISongs>([
             {

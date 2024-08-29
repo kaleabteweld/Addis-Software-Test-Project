@@ -22,7 +22,7 @@ export interface ISongsModel extends mongoose.Model<ISongsDocument> {
 
     total(type: "songs" | "artists" | "albums" | "genres" | "all"): Promise<number | { songs: number, artists: number, albums: number, genres: number }>
     totalSongsPerGenre(): Promise<{ _id: string, count: number }[]>
-    artistStats(): Promise<{ _id: string, count: number }[]>
+    artistStats(): Promise<{ _id: string, totalAlbums: number, totalSongs: number }[]>
     songsPerAlbum(): Promise<{ _id: string, count: number }[]>
 }
 

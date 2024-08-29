@@ -33,8 +33,8 @@ export default function TotalByType() {
                                     data: Object.entries(_totalBy as { songs: number, artists: number, albums: number, genres: number }).map(([label, value], id) => ({ id, label, value })),
                                 },
                             ]}
-                            width={400}
-                            height={200}
+                            width={800}
+                            height={300}
                         /> : <Box>
                             <Typography variant="h6" component="h2">Total {totalBy}: {_totalBy as number}</Typography>
                         </Box>
