@@ -32,7 +32,7 @@ const reviewApiSlice = songAPI.injectEndpoints({
                 method: 'POST',
                 body: newSong,
             }),
-            invalidatesTags: (result) => result ? [{ type: 'Song', id: result._id }] : [],
+            invalidatesTags: (result) => result ? [{ type: 'Song', }] : [],
         }),
 
         deleteSong: builder.mutation<void, string>({

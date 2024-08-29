@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AppBar, Toolbar, Typography, Button, Container, Box, List, ListItem, ListItemText, IconButton } from '@mui/material';
+import { AppBar, Toolbar, Typography, Button, Container, Box, List, ListItem, ListItemText, IconButton, CircularProgress } from '@mui/material';
 import { Link as RouterLink } from 'react-router-dom';
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
@@ -45,40 +45,48 @@ const HomePage = () => {
                 </Typography>
 
                 {
-                    (isLoading && !songs) ? <Typography variant="h6" component="h2" sx={{ marginTop: 2 }}>
-                        Loading...
-                    </Typography> : <List>
-                        {songs?.map((song) => (
-                            <ListItem
-                                key={song._id}
-                                sx={{
-                                    border: '1px solid #ddd',
-                                    borderRadius: 1,
-                                    marginBottom: 2,
-                                }}
-                            >
-                                <ListItemText
-                                    primary={`${song.title} - ${song.artist}`}
-                                    secondary={`Album: ${song.album}, Genre: ${song.genre}`}
-                                />
-                                <IconButton
-                                    edge="end"
-                                    aria-label="edit"
-                                    component={RouterLink}
-                                    to={`/edit/${song._id}`}
-                                >
-                                    <EditIcon />
-                                </IconButton>
-                                <IconButton
-                                    edge="end"
-                                    aria-label="delete"
-                                    onClick={() => handleDelete(song._id)}
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ListItem>
-                        ))}
-                    </List>
+                    (isLoading && !songs) ? <CircularProgress />
+                        :
+                        <>
+                            <List>
+                                {songs?.map((song) => (
+                                    <ListItem
+                                        key={song._id}
+                                        sx={{
+                                            border: '1px solid #ddd',
+                                            borderRadius: 1,
+                                            marginBottom: 2,
+                                        }}
+                                    >
+                                        <ListItemText
+                                            primary={`${song.title} - ${song.artist}`}
+                                            secondary={`Album: ${song.album}, Genre: ${song.genre}`}
+                                        />
+                                        <IconButton
+                                            edge="end"
+                                            aria-label="edit"
+                                            component={RouterLink}
+                                            to={`/edit/${song._id}`}
+                                        >
+                                            <EditIcon />
+                                        </IconButton>
+                                        <IconButton
+                                            edge="end"
+                                            aria-label="delete"
+                                            onClick={() => handleDelete(song._id)}
+                                        >
+                                            <DeleteIcon />
+                                        </IconButton>
+                                    </ListItem>
+                                ))}
+                            </List>
+
+                            {/**add pagination here */}
+                            <Button onClick={() => setPage((page) - 1)} disabled={page === 0}>Previous</Button>
+                            <Button onClick={() => setPage(page + 1)}>Next</Button>
+                        </>
+
+
                 }
 
 

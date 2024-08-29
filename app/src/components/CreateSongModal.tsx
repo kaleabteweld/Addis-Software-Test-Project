@@ -3,6 +3,8 @@ import { Button, Dialog, DialogTitle, DialogContent, DialogActions, TextField } 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { useCreateSongMutation } from '../api/slices/song.slices';
+import { INewSongFrom } from '../api/types/songs.types';
 
 interface CreateSongModalProps {
     open: boolean;
@@ -10,20 +12,30 @@ interface CreateSongModalProps {
 }
 
 const createSchema = z.object({
-    title: z.string().nonempty('Title is required'),
-    artist: z.string().nonempty('Artist is required'),
-    album: z.string().nonempty('Album is required'),
-    genre: z.string().nonempty('Genre is required'),
+    title: z.string().min(1, 'Title is required'),
+    artist: z.string().min(1, 'Artist is required'),
+    album: z.string().min(1, 'Album is required'),
+    genre: z.string().min(1, 'Genre is required'),
 });
 
+
 const CreateSongModal: React.FC<CreateSongModalProps> = ({ open, onClose }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm({
+
+    const { register, handleSubmit, formState: { errors }, reset } = useForm<INewSongFrom>({
         resolver: zodResolver(createSchema)
     });
 
-    const onSubmit = (data: any) => {
-        console.log(data);
-        // Handle form submission
+    const [createSong, { isLoading }] = useCreateSongMutation();
+
+    const onSubmit = async (data: INewSongFrom) => {
+        try {
+            await createSong(data).unwrap();
+            reset();
+            onClose();
+        } catch (error) {
+            console.error(error);
+        }
+
     };
 
     return (
@@ -70,8 +82,10 @@ const CreateSongModal: React.FC<CreateSongModalProps> = ({ open, onClose }) => {
                     />
                     <DialogActions>
                         <Button onClick={onClose}>Cancel</Button>
-                        <Button type="submit" variant="contained" color="primary">
-                            Create
+                        <Button type="submit" variant="contained" color="primary" disabled={isLoading}>
+                            {
+                                isLoading ? 'Creating...' : 'Create'
+                            }
                         </Button>
                     </DialogActions>
                 </form>
