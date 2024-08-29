@@ -58,8 +58,9 @@ const reviewApiSlice = songAPI.injectEndpoints({
             transformResponse: (response: { body: { _id: string, totalAlbums: number, totalSongs: number }[] }) => response.body,
         }),
 
-        getSongsPerAlbum: builder.query({
-            query: () => '/total/album',
+        getSongsPerAlbum: builder.query<{ _id: string, count: number }[], void>({
+            query: () => '/total/per/album',
+            transformResponse: (response: { body: { _id: string, count: number }[] }) => response.body,
         }),
     }),
 

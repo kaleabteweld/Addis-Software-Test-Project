@@ -3,6 +3,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import TotalByType from "../components/TotalByType";
 import TotalSongsPerGenre from "../components/TotalSongsPerGenre";
 import TotalSongsPerArtist from "../components/TotalSongsPerArtistStats";
+import TotalSongsPerAlbum from "../components/TotalSongsPerAlbum";
 
 
 
@@ -25,6 +26,7 @@ export default function StatisticsPage() {
                 <TotalByType />
                 <TotalSongsPerGenre />
                 <TotalSongsPerArtist />
+                <TotalSongsPerAlbum />
 
             </Container>
         </Box>

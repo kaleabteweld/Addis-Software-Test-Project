@@ -9,7 +9,6 @@ export default function TotalSongsPerArtist() {
 
     const [totalBy, setTotalBy] = useState<"songs" | "albums">("songs");
     const { data: totalSongsPerArtist, isFetching: totalSongsPerArtistLoading, refetch } = useGetArtistStatsQuery();
-    console.log(totalSongsPerArtist);
     return (
         <Box sx={{ flexGrow: 1 }}>
 
