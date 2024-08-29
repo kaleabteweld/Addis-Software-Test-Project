@@ -7,6 +7,7 @@ import { ISongs } from '../api/types/songs.types';
 import CreateSongModal from '../components/CreateSongModal';
 import { useGetSongsQuery } from '../api/slices/song.slices';
 import EditSongModal from '../components/EditSongModal';
+import DeleteSongModal from '../components/deletSongModal';
 
 const HomePage = () => {
     const [page, setPage] = useState(0);
@@ -14,6 +15,7 @@ const HomePage = () => {
 
     const [openCreateModal, setOpenCreateModal] = useState(false);
     const [openEditModal, setOpenEditModal] = useState(false);
+    const [openDeleteModal, setOpenDeleteModal] = useState(false);
     const [selectedSong, setSelectedSong] = useState<ISongs | null>(null);
 
 
@@ -82,7 +84,10 @@ const HomePage = () => {
                                         <IconButton
                                             edge="end"
                                             aria-label="delete"
-                                            onClick={() => handleDelete(song._id)}
+                                            onClick={() => {
+                                                setOpenDeleteModal(true);
+                                                setSelectedSong(song);
+                                            }}
                                         >
                                             <DeleteIcon />
                                         </IconButton>
@@ -99,6 +104,7 @@ const HomePage = () => {
 
 
             </Container>
+            {selectedSong && <DeleteSongModal open={openDeleteModal} onClose={() => { setOpenDeleteModal(false) }} songId={selectedSong._id} />}
             {selectedSong && <EditSongModal open={openEditModal} onClose={() => setOpenEditModal(false)} song={selectedSong} songId={selectedSong._id} />}
             <CreateSongModal open={openCreateModal} onClose={() => setOpenCreateModal(false)} />
         </Box>
