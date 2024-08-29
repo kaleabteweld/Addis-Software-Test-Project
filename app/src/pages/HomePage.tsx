@@ -6,11 +6,16 @@ import EditIcon from '@mui/icons-material/Edit';
 import { ISongs } from '../api/types/songs.types';
 import CreateSongModal from '../components/CreateSongModal';
 import { useGetSongsQuery } from '../api/slices/song.slices';
+import EditSongModal from '../components/EditSongModal';
 
 const HomePage = () => {
     const [page, setPage] = useState(0);
     const { data: songs, isLoading } = useGetSongsQuery(page);
+
     const [openCreateModal, setOpenCreateModal] = useState(false);
+    const [openEditModal, setOpenEditModal] = useState(false);
+    const [selectedSong, setSelectedSong] = useState<ISongs | null>(null);
+
 
     const handleDelete = async (id: string) => {
     };
@@ -66,7 +71,11 @@ const HomePage = () => {
                                             edge="end"
                                             aria-label="edit"
                                             component={RouterLink}
-                                            to={`/edit/${song._id}`}
+                                            onClick={() => {
+                                                setSelectedSong(song);
+                                                setOpenEditModal(true);
+                                            }}
+                                            to={`#`}
                                         >
                                             <EditIcon />
                                         </IconButton>
@@ -81,7 +90,6 @@ const HomePage = () => {
                                 ))}
                             </List>
 
-                            {/**add pagination here */}
                             <Button onClick={() => setPage((page) - 1)} disabled={page === 0}>Previous</Button>
                             <Button onClick={() => setPage(page + 1)}>Next</Button>
                         </>
@@ -91,7 +99,7 @@ const HomePage = () => {
 
 
             </Container>
-
+            {selectedSong && <EditSongModal open={openEditModal} onClose={() => setOpenEditModal(false)} song={selectedSong} songId={selectedSong._id} />}
             <CreateSongModal open={openCreateModal} onClose={() => setOpenCreateModal(false)} />
         </Box>
     );

@@ -64,7 +64,7 @@ export async function update(this: mongoose.Model<ISongs>, _id: string, sewSongs
 
     try {
         const newDoc = await this.findByIdAndUpdate(_id, sewSongs, { new: true, overwrite: true });
-        await newDoc?.populate(populatePath)
+        if (populatePath) await newDoc?.populate(populatePath)
         return newDoc;
     } catch (error) {
         throw error;
