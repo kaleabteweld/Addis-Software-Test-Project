@@ -1,5 +1,5 @@
 import songAPI from "..";
-import { INewSongFrom, ISongs, ISongUpdateFrom } from "../types/songs.types";
+import { INewSongFrom, ISongs, ISongSearchFrom, ISongUpdateFrom } from "../types/songs.types";
 
 const reviewApiSlice = songAPI.injectEndpoints({
     endpoints: (builder) => ({
@@ -48,6 +48,22 @@ const reviewApiSlice = songAPI.injectEndpoints({
             transformResponse: (response: { body: number | { songs: number, artists: number, albums: number, genres: number } }) => response.body,
         }),
 
+        searchSongs: builder.mutation<ISongs[], { page: number; form: ISongSearchFrom }>({
+            query: ({ page, form }) => ({
+                url: `/search/${page}`,
+                method: 'POST',
+                body: form,
+            }),
+            transformResponse: (response: { body: ISongs[] }) => response.body,
+            invalidatesTags: (result) =>
+                result
+                    ? [
+                        ...result.map((song) => ({ type: 'Song' as const, id: song._id })),
+                        { type: 'Song' as const, id: 'Recipe-SEARCH' },
+                    ]
+                    : [{ type: 'Song' as const, id: 'Recipe-SEARCH' }],
+        }),
+
         getTotalSongsPerGenre: builder.query<{ _id: string, count: number }[], void>({
             query: () => '/total/per/genre',
             transformResponse: (response: { body: { _id: string, count: number }[] }) => response.body,
@@ -76,4 +92,5 @@ export const {
     useGetTotalSongsPerGenreQuery,
     useGetArtistStatsQuery,
     useGetSongsPerAlbumQuery,
+    useSearchSongsMutation,
 } = reviewApiSlice

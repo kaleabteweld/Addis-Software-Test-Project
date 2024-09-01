@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { INewSongFrom, ISongUpdateFrom } from "./songs.type";
+import { INewSongFrom, ISongSearchFrom, ISongUpdateFrom } from "./songs.type";
 
 
 export const newSongSchema = Joi.object<INewSongFrom>({
@@ -14,5 +14,17 @@ export const songUpdateSchema = Joi.object<ISongUpdateFrom>({
     artist: Joi.string().optional(),
     album: Joi.string().optional(),
     genre: Joi.string().optional(),
+});
+
+
+export const songSearchSchema = Joi.object<ISongSearchFrom>({
+    title: Joi.string().allow('').optional(),
+    artist: Joi.string().allow('').optional(),
+    album: Joi.string().allow('').optional(),
+    genre: Joi.string().allow('').optional(),
+    sort: Joi.array().items(Joi.object({
+        field: Joi.string().allow('').required(),
+        order: Joi.string().valid("asc", "desc").required()
+    })).optional()
 });
 

@@ -33,6 +33,13 @@ publicSongRouter.post("/create", MakeErrorHandler(
     }
 ));
 
+publicSongRouter.post("/search/:page", MakeErrorHandler(
+    async (req: any, res: Response) => {
+        const page = Number.parseInt(req.params.page);
+        res.json(await SongController.search(req.body, page));
+    }
+));
+
 publicSongRouter.delete("/delete/:id", MakeErrorHandler(
     async (req: any, res: Response) => {
         const songId = req.params.id;

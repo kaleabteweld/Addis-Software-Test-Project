@@ -1,6 +1,7 @@
+import { SongSearchBuilder } from "../../Schema/Songs/song.utils";
 import SongsModel from "../../Schema/Songs/songs.schema";
-import { INewSongFrom, ISongs, ISongUpdateFrom } from "../../Schema/Songs/songs.type";
-import { newSongSchema, songUpdateSchema } from "../../Schema/Songs/songs.validation";
+import { INewSongFrom, ISongs, ISongSearchFrom, ISongUpdateFrom } from "../../Schema/Songs/songs.type";
+import { newSongSchema, songSearchSchema, songUpdateSchema } from "../../Schema/Songs/songs.validation";
 import { IResponseType } from "../../Types";
 
 
@@ -29,6 +30,15 @@ export default class SongController {
 
     static async getAll(page: number): Promise<IResponseType<ISongs[]>> {
         return { body: await SongsModel.find().skip(page * 10).limit(10).exec() }
+    }
+
+    static async search(searchFrom: ISongSearchFrom, page: number = 1): Promise<IResponseType<ISongs[]>> {
+        console.log({ searchFrom })
+        await SongsModel.validator(searchFrom, songSearchSchema);
+        return {
+            body: await ((await SongSearchBuilder.fromJSON(searchFrom)).withPagination(page)).execute()
+
+        }
     }
 
     static async removeById(songId: string): Promise<IResponseType<{} | null>> {

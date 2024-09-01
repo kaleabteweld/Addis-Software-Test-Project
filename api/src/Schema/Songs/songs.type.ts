@@ -35,3 +35,13 @@ export interface INewSongFrom {
 
 export interface ISongUpdateFrom extends Partial<INewSongFrom> {
 }
+
+
+export interface ISongSearchFrom {
+    title?: string;
+    artist?: string;
+    album?: string;
+    genre?: string;
+    page?: number;
+    sort?: { field: string, order: "asc" | "desc" }[]
+}
