@@ -5,7 +5,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
 import { ESongSearchField, ISongs, ISongSearchFrom } from '../api/types/songs.types';
 import CreateSongModal from '../components/CreateSongModal';
-import { useGetSongsQuery, useSearchSongsMutation } from '../api/slices/song.slices';
+import { useSearchSongsMutation } from '../api/slices/song.slices';
 import EditSongModal from '../components/EditSongModal';
 import DeleteSongModal from '../components/deletSongModal';
 import { useForm } from 'react-hook-form';
